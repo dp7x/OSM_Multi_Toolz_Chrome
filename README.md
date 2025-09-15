@@ -2,7 +2,7 @@
 
 **OSM Multi Toolz** is a Google Chrome extension designed for OpenStreetMap contributors who want to quickly analyze changesets directly from the browser. It shows detailed user information, comments, bounding boxes, and provides quick links to useful OSM tools.
 
-<img alt="OSM Multi Toolz" src="https://github.com/dp7x/OSM_Multi_Toolz_Chrome/main/readme/osmmultitoolz.png" />
+<img alt="OSM Multi Toolz" src="https://github.com/dp7x/OSM_Multi_Toolz_Chrome/blob/main/readme/osmmultitoolz.png" />
 
 ---
 

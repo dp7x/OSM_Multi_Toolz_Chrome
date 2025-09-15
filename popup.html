@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title id="pageTitle">OSM Multi Toolz</title>
+    <style>
+        body {
+            width: 300px;
+            padding: 15px;
+            font-family: sans-serif;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        .header-container img {
+            max-width: 110px;
+            margin-bottom: 5px;
+        }
+        .header-container h1 {
+            font-size: 1.2em;
+            margin: 0;
+            color: #4CAF50;
+        }
+        .header-container h2 {
+            font-size: 0.9em;
+            color: #666;
+            margin: 0;
+        }
+        h3 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        #changesetId {
+            font-weight: bold;
+            color: #007bff;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .credits {
+            margin-top: 25px;
+            font-size: 12px;
+            text-align: center;
+            color: #555;
+        }
+        .credits a {
+            color: #555;
+            text-decoration: none;
+        }
+        .credits a:hover {
+            text-decoration: underline;
+        }
+        .input-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .input-container input#changesetInput {
+            padding: 3px;
+            font-size: 12px;
+            width: 80px; 
+        }
+        .input-container button#loadBtn {
+            padding: 4px;
+            font-size: 12px;
+            width: auto;
+            margin-bottom: 10px;          
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <img src="OSM_MultiToolz.png" alt="OSM Multi Toolz Logo">
+        <h1 id="headerTitle">OSM Multi Toolz</h1>
+        <h2 id="headerSubtitle">Changeset analysis tools</h2>
+    </div>
+
+    <p><b id="changesetLabel">Detected Changeset:</b> <span id="changesetId">--</span></p>
+    <div class="input-container">
+        <label for="changesetInput" id="manualLabel"><b>Changeset Input:</b></label>
+        <input type="text" id="changesetInput" />
+        <button id="loadBtn">Load</button>
+    </div>
+
+    <div id="details"></div>
+    <div id="alerts" style="color:darkred; font-weight:bold;"></div>
+
+    <button id="osmchaBtn">Open in OSMCha</button>
+    <button id="achaviBtn">Open in Achavi</button>
+    <button id="osmvizBtn">Open in OSMViz</button>
+    <button id="osmoseBtn">Open in OSMOSE</button>
+    <button id="osminspectorBtn">Open in OSM Inspector</button>
+    <button id="mapcompareBtn">Open in Map Compare</button>
+	<button id="losmeBtn">Open in LOSMET</button>
+
+    <div class="credits">
+        <h5>&copy; 2025 <strong>dp7</strong>@<a href="https://www.openstreetmap.org/user/dp7" target="_blank">OpenStreetMap</a><br>Licensed under the <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a></h5>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

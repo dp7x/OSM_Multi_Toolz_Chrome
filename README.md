@@ -27,7 +27,7 @@
   - [OSMOSE](https://osmose.openstreetmap.fr/)
   - [OSM Inspector](https://tools.geofabrik.de/osmi/)
   - [Map Compare](https://mc.bbbike.org/)
-  - [LOS MET](https://resultmaps.neis-one.org/osm-edits-tile/)
+  - [LOSMET](https://resultmaps.neis-one.org/osm-edits-tile/)
 
 ---
 

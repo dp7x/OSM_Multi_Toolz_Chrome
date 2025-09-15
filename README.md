@@ -46,6 +46,7 @@
 2. Click the **OSM Multi Toolz** extension icon.
 3. The popup will automatically display detailed information about the changeset and user.
 4. Optionally, you can manually enter a changeset ID in the input box and click **Load**.
+5. Click one of the tools button for a deeper analysis
 
 ---
 

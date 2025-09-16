@@ -16,7 +16,7 @@
   - Last changeset date (`Last map edit`)
   - Number of GPX traces uploaded
 - Display changeset details:
-  - Comment (or indication if missing)
+  - Comment (or indication if missing) with translate functionality
   - Editor used (JOSM, iD, etc.)
   - Bounding box with link and copy-to-clipboard button
   - Changeset date with alerts for old or very large changesets

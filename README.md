@@ -4,6 +4,7 @@
 
 <img alt="OSM Multi Toolz" src="https://github.com/dp7x/OSM_Multi_Toolz_Chrome/blob/main/readme/osmmultitoolz.png" />
 
+## You can find the packed extension, ready to install on your browser, at the Chrome Web Store. Click here to [Download](https://chromewebstore.google.com/detail/osm-multitoolz/gkgfefahjkcohiijkjaiklchokhgdlpp) ##
 ---
 
 ## Features

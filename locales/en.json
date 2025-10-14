@@ -33,5 +33,13 @@
   "lastEdit": "Last map edit",
   "traces": "GPX traces",
   "blocks": "Blocks",
-  "active": "active"
+  "active": "active",
+  "btn_addWatchlist": "Add to watchlist",
+  "btn_openWatchlist": "Open watchlist",
+  "alert_watchlistAdded": "✅ Changeset added to watchlist!",
+  "alert_watchlistExists": "This changeset is already in your watchlist!",
+  "alert_noChangeset": "No changeset selected!",
+  "watchlist_title": "Watchlist",
+  "watchlist_empty": "No saved items.",
+  "btn_remove": "Remove"  
 }

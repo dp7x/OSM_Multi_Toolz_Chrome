@@ -6,6 +6,9 @@ async function loadLocale() {
     return await res.json();
 }
 
+// --- Global variable storing the current user ---
+let currentUser = "";
+
 document.addEventListener('DOMContentLoaded', async () => {
     const L = await loadLocale();
 
@@ -20,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- Update localized texts ---
     document.title = L.extName;
     document.getElementById('headerTitle').textContent = L.extName;
-	document.getElementById('headerSubtitle').textContent = L.headerTitle; 
+    document.getElementById('headerSubtitle').textContent = L.headerTitle; 
     document.getElementById('changesetLabel').textContent = L.changesetDetected;
     document.getElementById('manualLabel').textContent = L.manualChangeset;
     document.getElementById('osmchaBtn').textContent = L.btn_osmcha;
@@ -29,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('osmoseBtn').textContent = L.btn_osmose;
     document.getElementById('osminspectorBtn').textContent = L.btn_osminspector;
     document.getElementById('mapcompareBtn').textContent = L.btn_mapcompare;
-	document.getElementById('losmeBtn').textContent = L.btn_losme;
+    document.getElementById('losmeBtn').textContent = L.btn_losme;
 
     // --- Functions ---
     async function resolveChangesetFromObject(type, objId) {
@@ -66,12 +69,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ${commentCount > 0 ? `<a href="https://www.openstreetmap.org/changeset/${changesetId}#comments" target="_blank" style="margin-left: 10px; text-decoration: none; color: inherit;">💬 ${commentCount}</a>` : ''}
             `;
 
+            // --- Get current username ---
             const user = cs.getAttribute("user");
+            currentUser = user || "—"; // global save for watchlist
+
             const uid = cs.getAttribute("uid");
             const createdAt = new Date(cs.getAttribute("created_at"));
             const createdStr = createdAt.toLocaleString();
             const comment = cs.querySelector('tag[k="comment"]')?.getAttribute("v") || "";
-			const editor = cs.querySelector('tag[k="created_by"]')?.getAttribute("v") || "";
+            const editor = cs.querySelector('tag[k="created_by"]')?.getAttribute("v") || "";
             const minlat = parseFloat(cs.getAttribute("min_lat"));
             const maxlat = parseFloat(cs.getAttribute("max_lat"));
             const minlon = parseFloat(cs.getAttribute("min_lon"));
@@ -82,48 +88,44 @@ document.addEventListener('DOMContentLoaded', async () => {
             const latDiff = maxlat - minlat;
             const lonDiff = maxlon - minlon;
 
-			// --- helper date format dd/mm/yyyy ---
-			function formatDateDMY(dateStr) {
-				if (!dateStr) return "—";
-				const d = new Date(dateStr);
-				const day = d.getDate();
-				const month = d.getMonth() + 1;
-				const year = d.getFullYear();
-				return `${day}/${month}/${year}`;
-			}
+            // --- helper date format dd/mm/yyyy ---
+            function formatDateDMY(dateStr) {
+                if (!dateStr) return "—";
+                const d = new Date(dateStr);
+                const day = d.getDate();
+                const month = d.getMonth() + 1;
+                const year = d.getFullYear();
+                return `${day}/${month}/${year}`;
+            }
 
-			// --- Retrieve user info (changeset count, account_created, traces) ---
-			let changesetCount = "?";
-			let mapperSinceStr = "—";
-			let lastEditStr = "—";
-			let tracesCount = "0";
+            // --- Retrieve user info (changeset count, account_created, traces) ---
+            let changesetCount = "?";
+            let mapperSinceStr = "—";
+            let lastEditStr = "—";
+            let tracesCount = "0";
 
-			try {
-				const userRes = await fetch(`https://api.openstreetmap.org/api/0.6/user/${uid}`);
-				const userText = await userRes.text();
-				const userDoc = parser.parseFromString(userText, "application/xml");
+            try {
+                const userRes = await fetch(`https://api.openstreetmap.org/api/0.6/user/${uid}`);
+                const userText = await userRes.text();
+                const userDoc = parser.parseFromString(userText, "application/xml");
 
-				// total number of changesets
-				changesetCount = userDoc.querySelector("changesets")?.getAttribute("count") || "?";
+                changesetCount = userDoc.querySelector("changesets")?.getAttribute("count") || "?";
 
-				// account_created -> Mapper since
-				const accountCreated = userDoc.querySelector("user")?.getAttribute("account_created") || "";
-				mapperSinceStr = formatDateDMY(accountCreated);
+                const accountCreated = userDoc.querySelector("user")?.getAttribute("account_created") || "";
+                mapperSinceStr = formatDateDMY(accountCreated);
 
-				// GPS traces
-				tracesCount = userDoc.querySelector("traces")?.getAttribute("count") || "0";
+                tracesCount = userDoc.querySelector("traces")?.getAttribute("count") || "0";
 
-				// --- last changeset ---
-				const changesetsRes = await fetch(`https://api.openstreetmap.org/api/0.6/changesets?user=${uid}`);
-				const changesetsXml = await changesetsRes.text();
-				const changesetsDoc = parser.parseFromString(changesetsXml, "application/xml");
-				const lastChangesetNode = changesetsDoc.querySelector("changeset");
-				const lastChangesetDate = lastChangesetNode?.getAttribute("created_at") || "";
-				lastEditStr = formatDateDMY(lastChangesetDate);
+                const changesetsRes = await fetch(`https://api.openstreetmap.org/api/0.6/changesets?user=${uid}`);
+                const changesetsXml = await changesetsRes.text();
+                const changesetsDoc = parser.parseFromString(changesetsXml, "application/xml");
+                const lastChangesetNode = changesetsDoc.querySelector("changeset");
+                const lastChangesetDate = lastChangesetNode?.getAttribute("created_at") || "";
+                lastEditStr = formatDateDMY(lastChangesetDate);
 
-			} catch (err) {
-				console.error("Error getting user info:", err);
-			}
+            } catch (err) {
+                console.error("Error getting user info:", err);
+            }
 
             // --- ALERTS ---
             alertsDiv.innerHTML = "";
@@ -144,43 +146,41 @@ document.addEventListener('DOMContentLoaded', async () => {
                 tooOld = true;
                 dateHtml = `<p style="color:orange;"><b>${L.changesetDate}:</b> ${createdStr}</p>`;
             }
-			
-			// translate comment
-			const userLang = navigator.language.split('-')[0] || 'en'; //browser language
-			const encodedComment = encodeURIComponent(comment || "");
-			const translateLink = `https://translate.google.com/?sl=auto&tl=${userLang}&text=${encodedComment}`;
 
+            // translate comment
+            const userLang = navigator.language.split('-')[0] || 'en';
+            const encodedComment = encodeURIComponent(comment || "");
+            const translateLink = `https://translate.google.com/?sl=auto&tl=${userLang}&text=${encodedComment}`;
 
             // --- HTML CONSTRUCTION DETAILS ---
-			let html = `
-			<p><b>${L.user}:</b> ${user} (<strong>${changesetCount}</strong>)
-				<a href="https://www.openstreetmap.org/user/${encodeURIComponent(user)}" target="_blank">${L.osmProfile}</a> |
-				<a href="https://hdyc.neis-one.org/?${encodeURIComponent(user)}" target="_blank">${L.hdyc}</a> |
-				<a href="https://www.openstreetmap.org/messages/new/${encodeURIComponent(user)}" target="_blank">${L.message}</a>
-			</p>
+            let html = `
+            <p><b>${L.user}:</b> ${user} (<strong>${changesetCount}</strong>)
+                <a href="https://www.openstreetmap.org/user/${encodeURIComponent(user)}" target="_blank">${L.osmProfile}</a> |
+                <a href="https://hdyc.neis-one.org/?${encodeURIComponent(user)}" target="_blank">${L.hdyc}</a> |
+                <a href="https://www.openstreetmap.org/messages/new/${encodeURIComponent(user)}" target="_blank">${L.message}</a>
+            </p>
 
-			<!-- Icons -->
-			<p style="margin:4px 0 8px 0; font-size:90%;"><center>
-				<span title="${L.mapperSince}">⏳ ${mapperSinceStr}</span> &nbsp;|&nbsp;
-				<span title="${L.lastEdit}">🕒 ${lastEditStr}</span> &nbsp;|&nbsp;
-				<span title="${L.traces}">🛰️ ${tracesCount}</span>
-				</center>
-			</p>
+            <p style="margin:4px 0 8px 0; font-size:90%;"><center>
+                <span title="${L.mapperSince}">⏳ ${mapperSinceStr}</span> &nbsp;|&nbsp;
+                <span title="${L.lastEdit}">🕒 ${lastEditStr}</span> &nbsp;|&nbsp;
+                <span title="${L.traces}">🛰️ ${tracesCount}</span>
+                </center>
+            </p>
 
-			<p>
-			  <b>${L.comment}:</b> ${comment || L.missingComment} 
-			  ${comment ? `<a href="${translateLink}" target="_blank" title="Translate comment">🌐</a>` : ''}
-			</p>
+            <p>
+              <b>${L.comment}:</b> ${comment || L.missingComment} 
+              ${comment ? `<a href="${translateLink}" target="_blank" title="Translate comment">🌐</a>` : ''}
+            </p>
 
-			<p><b>${L.editor || "Editor"}:</b> ${editor || L.missingEditor || "-"}</p>
+            <p><b>${L.editor || "Editor"}:</b> ${editor || L.missingEditor || "-"}</p>
 
-			${dateHtml}
+            ${dateHtml}
 
-			<p><b>${L.bbox}:</b>
-				<a href="${bboxLink}" target="_blank">${bboxStr}</a>
-				<a href="#" id="copyBbox" style="margin-left:8px; font-size:90%;">📋 ${L.copy}</a>
-			</p>
-			`;
+            <p><b>${L.bbox}:</b>
+                <a href="${bboxLink}" target="_blank">${bboxStr}</a>
+                <a href="#" id="copyBbox" style="margin-left:8px; font-size:90%;">📋 ${L.copy}</a>
+            </p>
+            `;
 
             detailsDiv.innerHTML = html;
 
@@ -227,10 +227,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if(tooOld) alert(L.alertOldChangeset);
                 openTab(`https://mc.bbbike.org/mc/?lon=${centerLon}&lat=${centerLat}&zoom=15`);
             };
-			document.getElementById('losmeBtn').onclick = () => {
-				if (tooOld) alert("This changeset is too old, LOSMET may not display it correctly..");
-				openTab(`https://resultmaps.neis-one.org/osm-edits-tile/#14/${centerLat}/${centerLon}`);
-			};
+            document.getElementById('losmeBtn').onclick = () => {
+                if (tooOld) alert("This changeset is too old, LOSMET may not display it correctly..");
+                openTab(`https://resultmaps.neis-one.org/osm-edits-tile/#14/${centerLat}/${centerLon}`);
+            };
         } catch (err) {
             alertsDiv.innerHTML = `<p style="color:red">Error getting data</p>`;
             console.error(err);
@@ -260,4 +260,57 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+	// === Watchlist buttons ===
+	document.getElementById("addToWatchlistBtn").title = L.btn_addWatchlist;
+	document.getElementById("openWatchlistBtn").title = L.btn_openWatchlist;
+
+	document.getElementById("addToWatchlistBtn").addEventListener("click", async () => {
+		const changesetId = changesetInput.value.trim();
+		if (!changesetId) {
+			alert(L.alert_noChangeset);
+			return;
+		}
+
+		const link = `https://www.openstreetmap.org/changeset/${changesetId}`;
+
+		const user = currentUser || "—";
+
+		const commentEl = document.querySelector("#details p:nth-of-type(4)")?.innerText || "";
+		const comment = commentEl.replace(/^Comment:\s*/i, "").trim() || "—";
+
+		const { watchlist = [] } = await chrome.storage.local.get("watchlist");
+
+		// Duplicates control
+		if (watchlist.some(entry => entry.id === changesetId)) {
+			alert(L.alert_watchlistExists);
+			return;
+		}
+
+		// Create new
+		const newEntry = {
+			id: changesetId,
+			user: user,
+			comment: comment,
+			link: link
+		};
+
+		watchlist.push(newEntry);
+		await chrome.storage.local.set({ watchlist });
+
+		alert(L.alert_watchlistAdded);
+	});
+
+	// === Button to open Watchlist ===
+	document.getElementById("openWatchlistBtn").addEventListener("click", () => {
+		chrome.windows.create({
+			url: "watchlist.html",
+			type: "popup",
+			width: 600,
+			height: 400,
+			top: 100,
+			left: 100
+		});
+	});
+
+	
 });

@@ -33,5 +33,13 @@
   "lastEdit": "Ultima modifica",
   "traces": "Tracce GPX",
   "blocks": "Blocchi",
-  "active": "Account bloccato ?"  
+  "active": "Account bloccato ?",
+  "btn_addWatchlist": "Aggiungi watchlist",
+  "btn_openWatchlist": "Apri watchlist",
+  "alert_watchlistAdded": "✅ Changeset aggiunto alla watchlist!",
+  "alert_watchlistExists": "Questo changeset è già nella tua watchlist!",
+  "alert_noChangeset": "Nessun changeset selezionato!",
+  "watchlist_title": "Watchlist",
+  "watchlist_empty": "Nessun elemento salvato.",
+  "btn_remove": "Rimuovi"
 }

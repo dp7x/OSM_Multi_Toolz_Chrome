@@ -87,6 +87,27 @@
             width: auto;
             margin-bottom: 10px;          
         }
+		.mini-btn {
+		  background-color: #e0e0e0;
+		  border: 1px solid #bbb;
+		  border-radius: 6px;
+		  padding: 2px 6px;
+		  font-size: 14px;
+		  cursor: pointer;
+		  transition: background-color 0.2s;
+		}
+		.mini-btn:hover {
+		  background-color: #d0d0d0;
+		}
+		#toolbar {
+		  position: sticky;
+		  top: 0;
+		  background: #f8f8f8;
+		  padding: 4px;
+		  border-bottom: 1px solid #ccc;
+		  z-index: 10;
+		}
+
     </style>
 </head>
 <body>
@@ -95,7 +116,7 @@
         <h1 id="headerTitle">OSM Multi Toolz</h1>
         <h2 id="headerSubtitle">Changeset analysis tools</h2>
     </div>
-
+	
     <p><b id="changesetLabel">Detected Changeset:</b> <span id="changesetId">--</span></p>
     <div class="input-container">
         <label for="changesetInput" id="manualLabel"><b>Changeset Input:</b></label>
@@ -105,6 +126,11 @@
 
     <div id="details"></div>
     <div id="alerts" style="color:darkred; font-weight:bold;"></div>
+
+	<div id="toolbar" style="display:flex; justify-content:flex-end; gap:6px; margin-bottom:6px;">
+	  <button id="addToWatchlistBtn" class="mini-btn" title="Aggiungi alla Watchlist">⭐</button>
+	  <button id="openWatchlistBtn" class="mini-btn" title="Apri Watchlist">📋</button>
+	</div>
 
     <button id="osmchaBtn">Open in OSMCha</button>
     <button id="achaviBtn">Open in Achavi</button>

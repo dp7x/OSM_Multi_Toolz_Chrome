@@ -33,5 +33,13 @@
   "lastEdit": "Posledná úprava",
   "traces": "GPX stopy",
   "blocks": "Bloky",
-  "active": "aktívny"    
+  "active": "aktívny",
+  "btn_addWatchlist": "Pridať do zoznamu sledovania",
+  "btn_openWatchlist": "Otvoriť zoznam sledovania", 
+  "alert_watchlistAdded": "✅ Zmena pridaná do zoznamu sledovania!",
+  "alert_watchlistExists": "Táto zmena je už vo vašom zozname sledovania!",
+  "alert_noChangeset": "Nie je vybraná žiadna zmena!",
+  "watchlist_title": "Zoznam sledovania",
+  "watchlist_empty": "Žiadne uložené položky.",
+  "btn_remove": "Odstrániť"
 }

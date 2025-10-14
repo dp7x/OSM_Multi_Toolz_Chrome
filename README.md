@@ -47,7 +47,10 @@
 2. Click the **OSM Multi Toolz** extension icon.
 3. The popup will automatically display detailed information about the changeset and user.
 4. Optionally, you can manually enter a changeset ID in the input box and click **Load**.
-5. Click one of the tools button for a deeper analysis
+5. Click one of the tools button for a deeper analysis.
+6. Use the ⭐ button you can add the changeset to a personal watchlist; with the 📋 button you can open the watchlist with the link to the stored changesets.
+7. Use the 🌐 to translate the changeset's comment into your local language.
+8. If you see a 💬 icon, it means the changeset has been commented.
 
 ---
 

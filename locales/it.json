@@ -41,5 +41,14 @@
   "alert_noChangeset": "Nessun changeset selezionato!",
   "watchlist_title": "Watchlist",
   "watchlist_empty": "Nessun elemento salvato.",
-  "btn_remove": "Rimuovi"
+  "btn_remove": "Rimuovi",
+  "export_json": "Esporta JSON",
+  "import_json": "Importa JSON",  
+  "total_items": "Elementi totali",
+  "import_confirm": "Importare {count} elementi?",
+  "import_confirm_replace": "La watchlist corrente ha {current} elementi. Sostituire con {new} elementi?",
+  "import_success": "Importati con successo {count} elementi!",
+  "import_error": "Errore durante l'importazione",
+  "import_invalid_format": "Formato file non valido",
+  "import_invalid_data": "Struttura dati non valida"
 }

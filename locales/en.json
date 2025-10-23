@@ -41,5 +41,14 @@
   "alert_noChangeset": "No changeset selected!",
   "watchlist_title": "Watchlist",
   "watchlist_empty": "No saved items.",
-  "btn_remove": "Remove"  
+  "btn_remove": "Remove" ,
+  "export_json": "Export JSON",
+  "import_json": "Import JSON",  
+  "total_items": "Total items" ,
+  "import_confirm": "Import {count} items?",
+  "import_confirm_replace": "Current watchlist has {current} items. Replace with {new} items?",
+  "import_success": "Successfully imported {count} items!",
+  "import_error": "Import error",
+  "import_invalid_format": "Invalid file format",
+  "import_invalid_data": "Invalid data structure"
 }

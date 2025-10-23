@@ -41,5 +41,14 @@
   "alert_noChangeset": "Nie je vybraná žiadna zmena!",
   "watchlist_title": "Zoznam sledovania",
   "watchlist_empty": "Žiadne uložené položky.",
-  "btn_remove": "Odstrániť"
+  "btn_remove": "Odstrániť",
+  "export_json": "Exportovať JSON",
+  "import_json": "Importovať JSON",
+  "total_items": "Celkom položiek",
+  "import_confirm": "Importovať {count} položiek?",
+  "import_confirm_replace": "Aktuálny zoznam má {current} položiek. Nahradiť {new} položkami?",
+  "import_success": "Úspešne importovaných {count} položiek!",
+  "import_error": "Chyba pri importe",
+  "import_invalid_format": "Neplatný formát súboru",
+  "import_invalid_data": "Neplatná štruktúra dát"  
 }
